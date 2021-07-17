@@ -9,9 +9,11 @@ from os import path
 from urllib.parse import urlparse
 from threading import Thread
 from time import sleep
+import datetime
 
 
 configs = config.configs
+thisTime = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 driver_path = path.join(path.dirname(path.abspath(__file__)), 'resources/chromedriver')
 
 
@@ -23,7 +25,7 @@ def capTraffic(website_name, tag):
     虽然stop_filter可以设置抓包停止条件，但是由于是browser和sniff是串行的，所以无法在中间执行点击命令
     """
     print("开始捕website_name的视频包")
-    pcap_path = configs.get('path') + website_name + str(tag) + ".pcap"
+    pcap_path = configs.get('path') + website_name + thisTime + str(tag) + ".pcap"
     dpkt = sniff(iface=configs.get('iface'), filter='tcp', timeout=configs.get('capture_timeout'))
     # 用sniffer对象
     # asyncsniffer
